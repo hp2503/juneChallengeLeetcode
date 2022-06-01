@@ -1,0 +1,25 @@
+//simple approach
+
+class Solution {
+public:
+    vector<int> runningSum(vector<int>& nums) {
+    //first element will be same in input and output array;
+      for(int i=1;i<nums.size();i++)
+      {
+      // from 2nd onwards they will be sum of that and previous one 
+        nums[i]+=nums[i-1];
+      }
+      return nums;
+    }
+};
+
+
+//using stl; partial_sum(first,last,referance) function;
+
+class Solution {
+public:
+    vector<int> runningSum(vector<int>& nums) {
+      partial_sum(nums.begin(),nums.end(),nums.begin());
+      return nums;
+    }
+};
