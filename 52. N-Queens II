@@ -75,3 +75,43 @@ int totalNQueens(int n) {
     }
     
     +hashset sol
+
+
+
+//without use of ans and direct count;
+class Solution {
+public:
+  int count=0;
+    int totalNQueens(int n) {
+      vector<string>board(n,string(n,'.'));
+      vector<int>left(n,0);
+      vector<int>upperleft(2*n-1,0);
+      vector<int>lowerleft(2*n-1,0);
+            
+      solve(0,board,left ,upperleft,lowerleft,n);
+      return count;
+    }
+   void solve(int col,vector<string>&board,vector<int>&left,vector<int>&upperleft,vector<int>lowerleft,int n)
+  {
+    if(col==n)
+    {
+      count++;
+      return;
+    }
+    for(int i=0;i<n;i++)
+    {
+      if(left[i]==0 && upperleft[n-1+col-i]==0 &&lowerleft[i+col]==0)
+      {
+        board[i][col]='Q';
+        left[i]=1;
+        upperleft[n-1+col-i]=1;
+        lowerleft[i+col]=1;
+        solve(col+1,board,left,upperleft,lowerleft,n);
+        board[i][col]='.';
+        left[i]=0;
+        upperleft[n-1+col-i]=0;
+        lowerleft[i+col]=0;
+      }
+    }
+  }
+};
