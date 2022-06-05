@@ -73,3 +73,5 @@ int totalNQueens(int n) {
       res=solveNQueens(n);
       return res.size();
     }
+    
+    +hashset sol
