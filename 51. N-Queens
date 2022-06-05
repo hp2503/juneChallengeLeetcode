@@ -1,0 +1,104 @@
+//simple brute force
+class Solution {
+public:
+  
+  bool possible(int col,int row,vector<string>board,int n)
+  {
+    int temp1=row;
+    int temp2=col;
+    
+    for(int i=col;i>=0;i--)
+    {
+      if(board[row][i]=='Q')
+      {
+        return false;
+      }
+    }
+    while(col>=0 && row<n)
+    {
+      if(board[row][col]=='Q')
+      {
+        return false;
+      }
+      row++;
+      col--;
+    }
+    while(temp1>=0 && temp2>=0) 
+    {
+      if(board[temp1][temp2]=='Q')
+      {
+        return false;
+      }
+      temp1--;
+      temp2--;
+    }
+    return true;
+  }
+  void solve(int col,vector<string>&board,vector<vector<string>>&ans,int n)
+  {
+    if(col==n)
+    {
+      ans.push_back(board);
+      return ;
+    }
+    for(int row=0;row<n;row++)
+    {
+      if(possible(col,row,board,n))
+      {
+        board[row][col]='Q';
+        solve(col+1,board,ans,n);
+        board[row][col]='.';
+      }
+    }
+  }
+    vector<vector<string>> solveNQueens(int n) {
+      vector<vector<string>>ans;
+      vector<string>board(n,string(n,'.'));
+      
+      solve(0,board, ans, n);
+      return ans;
+    }
+  
+};
+
+
+
+//using hash-set
+class Solution {
+public:
+    vector<vector<string>> solveNQueens(int n) {
+      
+      vector<vector<string>>ans;
+      vector<string>board(n,string(n,'.'));
+      vector<int>left(n,0);
+      vector<int>upperleft(2*n-1,0);
+      vector<int>lowerleft(2*n-1,0);
+            
+      solve(0,board,ans,left ,upperleft,lowerleft,n);
+      return ans;
+    }
+  
+  void solve(int col,vector<string>&board,vector<vector<string>>&ans,vector<int>&left,vector<int>&upperleft,vector<int>lowerleft,int n)
+  {
+    if(col==n)
+    {
+      ans.push_back(board);
+      return;
+    }
+    for(int i=0;i<n;i++)
+    {
+      if(left[i]==0 && upperleft[n-1+col-i]==0 &&lowerleft[i+col]==0)
+      {
+        board[i][col]='Q';
+        left[i]=1;
+        upperleft[n-1+col-i]=1;
+        lowerleft[i+col]=1;
+        solve(col+1,board,ans,left,upperleft,lowerleft,n);
+        board[i][col]='.';
+        left[i]=0;
+        upperleft[n-1+col-i]=0;
+        lowerleft[i+col]=0;
+      }
+    }
+  }
+};
