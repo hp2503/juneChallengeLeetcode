@@ -1,0 +1,50 @@
+//basically created 3 maps and 3 temp node where  2 nodes and 2 maps are used to traverse and map count of each linked list.
+//then during mapping of count the 3rd map is also mapped for both to count common freq;
+// then use path of longer list and intersection is obtained
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+      ListNode *temp1=headA;
+      ListNode *temp2=headB;
+      int s1=0;
+      int s2=0;
+      map<ListNode *,int>m1;
+      map<ListNode *,int>m2;
+      map<ListNode *,int>m3;
+      
+      while(temp1!=NULL)
+      {
+        m1[temp1]++;
+        m2[temp1]++;
+        s1++;
+        temp1=temp1->next;
+      }
+      while(temp2!=NULL)
+      {
+        m3[temp2]++;
+        m1[temp2]++;
+        s2++;
+        temp2=temp2->next;
+      }
+      ListNode *temp=(s1>s2)?headA:headB;
+      while(temp!=NULL)
+      {
+        if((m1[temp]>m2[temp] && m1[temp]>m3[temp]))
+           {
+             break;
+           }
+        temp=temp->next;
+      }
+      return temp;
+    }
+};
