@@ -1,0 +1,81 @@
+//simple sol
+
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+      int last1=m-1;
+      int last2=n-1;
+      int lastmerged=m+n-1;
+      
+      while(last1>=0 and last2>=0)
+      {
+        if(nums1[last1]>nums2[last2])
+        {
+          nums1[lastmerged]=nums1[last1];
+          last1--;
+          lastmerged--;
+        }
+        else {
+          nums1[lastmerged]=nums2[last2];
+          last2--;
+          lastmerged--;
+        }
+      }
+      while(last2>=0)
+      {
+        nums1[lastmerged]=nums2[last2];
+        last2--;
+        lastmerged--;
+      }
+        
+    }
+};
+
+
+
+//using the sort function(but not actually merging here)
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+      for(int i=m+n-1;i>=m;i--)
+      {
+        nums1.pop_back();
+      }
+      for(int i=0;i<n;i++)
+      {
+        nums1.push_back(nums2[i]);
+      }
+      sort(nums1.begin(),nums1.end());
+        
+    }
+};
+
+
+//fastest
+
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+      int last1=m-1;
+      int last2=n-1;
+      int lastmerged=m+n-1;
+      
+      while(last1>=0 and last2>=0)
+      {
+        if(nums1[last1]>nums2[last2])
+        {
+          nums1[lastmerged--]=nums1[last1--];
+          
+        }
+        else {
+          nums1[lastmerged--]=nums2[last2--];
+          
+        }
+      }
+      while(last2>=0)
+      {
+        nums1[lastmerged--]=nums2[last2--];
+      }
+        
+    }
+};
